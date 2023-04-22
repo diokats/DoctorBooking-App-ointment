@@ -13,45 +13,13 @@ namespace DoctorBooking_App_ointment
         }
 
 
-
-        /* private void Login_Click(object sender, EventArgs e)
-         {
-
-             richTextBox1.Clear();
-
-             conn.Open();
-
-             String selectSQL = "Select * from User";
-             SQLiteCommand cmd = new SQLiteCommand(selectSQL, conn);
-             SQLiteDataReader reader = cmd.ExecuteReader();
-             while (reader.Read())
-             {
-                 richTextBox1.AppendText(reader.GetString(1) + Environment.NewLine);
-
-             }
-
-             conn.Close();
-         }*/
         private void Form1_Load(object sender, EventArgs e)
         {
             conn = new SQLiteConnection(connectionString);
+
         }
 
-        /*private void signup_Click(object sender, EventArgs e)
-        {
-            conn.Open();
 
-            String insertSql = "Insert into User(name,password) values('Chrisanthi','123456')";
-            SQLiteCommand cmd = new SQLiteCommand(insertSql, conn);
-            int count = cmd.ExecuteNonQuery();
-            if (count > 0)
-
-                MessageBox.Show(count.ToString() + "signUp succesful");
-
-
-            conn.Close();
-
-        }*/
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -67,28 +35,43 @@ namespace DoctorBooking_App_ointment
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conn.Open();
 
-            String amka = textBox1.Text;
-            String password = textBox2.Text;
+            String amka = textBox1.Text.Trim();
+            String password = textBox2.Text.Trim();
 
-            String selectSQL = "Select * from User where " + "amka=@amka and password=@password";
-            SQLiteCommand cmd = new SQLiteCommand(selectSQL, conn);
-            cmd.Parameters.AddWithValue("@amka", amka);
-            cmd.Parameters.AddWithValue("@password", password);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            if (amka != null && password != null && amka != "" && password != "")
+
             {
-                this.Hide();
-                MessageBox.Show("You are successfully logged in");
-                new Form3().Show();
+                conn.Open();
+
+                String selectSQL = "Select * from User where " + "amka=@amka and password=@password";
+                SQLiteCommand cmd = new SQLiteCommand(selectSQL, conn);
+                cmd.Parameters.AddWithValue("@amka", amka);
+                cmd.Parameters.AddWithValue("@password", password);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Program.userId = amka;
+                    Program.userType = "patient";
+                    MessageBox.Show("You are successfully logged in");
+                    new Form3().Show();
+                    this.Hide();
+
+                }
+                else
+                {
+                    MessageBox.Show("Wrong email and/or password");
+
+                }
+                conn.Close();
+
             }
             else
             {
-                MessageBox.Show("Wrong email and/or password");
+                MessageBox.Show("You must fill in all the fields to continue");
 
             }
-            conn.Close();
+
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

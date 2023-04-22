@@ -5,6 +5,8 @@ namespace DoctorBooking_App_ointment
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+        public static String userType;
+        public static String userId;
         [STAThread]
         static void Main()
         {

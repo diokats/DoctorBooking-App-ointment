@@ -41,28 +41,39 @@ namespace DoctorBooking_App_ointment
         private void button2_Click(object sender, EventArgs e)
         {
 
-            conn.Open();
-            String ama = textBox3.Text;
-            String password = textBox4.Text;
-            String name = textBox5.Text;
-            String specialty = textBox6.Text;
-            String tel = textBox7.Text;
-            String email = textBox8.Text;
-            String address = textBox9.Text;
-            String zip = textBox10.Text;
-            String region = textBox11.Text;
+            String ama = textBox3.Text.Trim();
+            String password = textBox4.Text.Trim();
+            String name = textBox5.Text.Trim();
+            String specialty = textBox6.Text.Trim();
+            String tel = textBox7.Text.Trim();
+            String email = textBox8.Text.Trim();
+            String address = textBox9.Text.Trim();
+            String zip = textBox10.Text.Trim();
+            String region = textBox11.Text.Trim();
+
+            if (ama != null && password != null && name != null && specialty != null && tel != null && email != null && address != null && zip != null && region != null 
+                && ama != "" && password != "" && name != "" && specialty != "" && tel != "" && email != "" && address != "" && zip != "" && region != "")
+            {
+                conn.Open();
+                String insertSql = "Insert into Doctor(ama,password,name,specialty,tel,email,address,zip,region) values('" + ama + "','" + password + "','" + name + "','" + specialty + "','" + tel + "','" + email + "','" + address + "','" + zip + "','" + region + "')";
+                SQLiteCommand cmd = new SQLiteCommand(insertSql, conn);
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+
+                    MessageBox.Show(count.ToString() + "Congratulations, your account has been successfully created.");
+
+
+                conn.Close();
+
+            }
+            else
+            {
+                MessageBox.Show("You must fill in all the fields to continue");
+
+            }
 
 
 
-            String insertSql = "Insert into Doctor(ama,password,name,specialty,tel,email,address,zip,region) values('" + ama + "','" + password + "','" + name + "','" + specialty + "','" + tel + "','" + email + "','" + address + "','" + zip + "','" + region + "')";
-            SQLiteCommand cmd = new SQLiteCommand(insertSql, conn);
-            int count = cmd.ExecuteNonQuery();
-            if (count > 0)
-
-                MessageBox.Show(count.ToString() + "Congratulations, your account has been successfully created.");
-
-
-            conn.Close();
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -73,28 +84,45 @@ namespace DoctorBooking_App_ointment
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conn.Open();
+            String ama = textBox1.Text.Trim();
+            String password = textBox2.Text.Trim();
 
-            String ama = textBox1.Text;
-            String password = textBox2.Text;
 
-            String selectSQL = "Select * from Doctor where " + "ama=@ama and password=@password";
-            SQLiteCommand cmd = new SQLiteCommand(selectSQL, conn);
-            cmd.Parameters.AddWithValue("@ama", ama);
-            cmd.Parameters.AddWithValue("@password", password);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            if (ama != null && password != null && ama != "" && password != "")
             {
-                this.Hide();
-                MessageBox.Show("You are successfully logged in");
-                new Form3().Show();
+                conn.Open();
+
+                String selectSQL = "Select * from Doctor where " + "ama=@ama and password=@password";
+                SQLiteCommand cmd = new SQLiteCommand(selectSQL, conn);
+                cmd.Parameters.AddWithValue("@ama", ama);
+                cmd.Parameters.AddWithValue("@password", password);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Program.userId = ama;
+                    Program.userType = "doctor";
+                    MessageBox.Show("You are successfully logged in");
+                    new Form3().Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong email and/or password");
+
+                }
+                conn.Close();
+
+
             }
+
             else
             {
-                MessageBox.Show("Wrong email and/or password");
+                MessageBox.Show("You must fill in all the fields to continue");
 
             }
-            conn.Close();
+
+
+
         }
     }
 }

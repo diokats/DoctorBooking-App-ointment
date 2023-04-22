@@ -42,6 +42,8 @@
             toolTip2 = new ToolTip(components);
             linkLabel2 = new LinkLabel();
             label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -143,11 +145,32 @@
             label3.TabIndex = 13;
             label3.Text = "Sign In";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(328, -27);
+            label4.Name = "label4";
+            label4.Size = new Size(78, 32);
+            label4.TabIndex = 14;
+            label4.Text = "label4";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Black", 13.875F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(587, 12);
+            label5.Name = "label5";
+            label5.Size = new Size(629, 50);
+            label5.TabIndex = 15;
+            label5.Text = "Welcome To The Doctor AnyStyle";
+            // 
             // ConnectUser
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1254, 629);
+            Controls.Add(label5);
+            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(linkLabel2);
             Controls.Add(linkLabel1);
@@ -181,5 +204,7 @@
         private ToolTip toolTip2;
         private LinkLabel linkLabel2;
         private Label label3;
+        private Label label4;
+        private Label label5;
     }
 }
